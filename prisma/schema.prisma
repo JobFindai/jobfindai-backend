@@ -20,7 +20,69 @@ model User {
   imageUrl String
   firstName String
   lastName String
+  type     UserType?
   userName String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime
+  profile   Profile?
+  jobs      Job[]          @relation("EmployerJobs")
+  applications Application[]
+}
+
+enum UserType {
+  STUDENT
+  EARLY_CAREER
+  MID_CAREER
+  EXPERIENCED_PROFESSIONAL
+  CAREER_SWITCHER
+  ADMIN
+}
+
+model Profile {
+  id       Int    @id @default(autoincrement())
+  bio      String?
+  resumeUrl String?
+  location String?
+
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Job {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  salary      Int?
+  location    String?
+
+  employerId  Int
+  employer    User     @relation("EmployerJobs", fields: [employerId], references: [id], onDelete: Cascade)
+
+  applications Application[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Application {
+  id        Int    @id @default(autoincrement())
+  status    ApplicationStatus @default(PENDING)
+
+  applicantId Int
+  jobId       Int
+
+  applicant User @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  job       Job  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([applicantId, jobId]) // Prevent duplicate applications
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWED
+  ACCEPTED
+  REJECTED
 }

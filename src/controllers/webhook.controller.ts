@@ -41,10 +41,9 @@ export async function createUser(req: Request, res: Response) {
     const eventType = evt.type;
 
     if (eventType === "user.created") {
-      // Create new user to sync with clerk
+      // Create new user in db to sync with clerk
 
-      console.log(user);
-      const newUser = await prismaClient.user.create({
+      await prismaClient.user.create({
         data: {
           clerkId: user.id,
           email: user.email_addresses?.at(0)?.email_address ?? "",
@@ -56,8 +55,6 @@ export async function createUser(req: Request, res: Response) {
           imageUrl: user.image_url ?? "",
         },
       });
-
-      console.log(newUser);
 
       return res.status(201).json({ message: "User created" });
     } else {
