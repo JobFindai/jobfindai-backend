@@ -49,6 +49,7 @@ export async function createUser(req: Request, res: Response) {
           email: user.email_addresses?.at(0)?.email_address ?? "",
           firstName: user.first_name ?? "",
           lastName: user.last_name ?? "",
+          onboardingStatus: "PENDING",
           userName: user.username ?? user.id.replace("_", "").slice(0, 10),
           updatedAt: new Date(user.updated_at),
           createdAt: new Date(user.created_at),
