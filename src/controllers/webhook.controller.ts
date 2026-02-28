@@ -2,8 +2,8 @@ import { verifyWebhook } from "@clerk/express/webhooks";
 import type { NextFunction, Request, Response } from "express";
 import { Webhook } from "svix";
 import HttpError from "../class/error";
-import { prismaClient } from "../app";
 import type { User } from "../types/user";
+import { prisma } from "../utils/prisma";
 
 export async function validateWebhook(
   req: Request,
@@ -43,7 +43,7 @@ export async function createUser(req: Request, res: Response) {
     if (eventType === "user.created") {
       // Create new user in db to sync with clerk
 
-      await prismaClient.user.create({
+      await prisma.user.create({
         data: {
           clerkId: user.id,
           email: user.email_addresses?.at(0)?.email_address ?? "",
@@ -57,6 +57,13 @@ export async function createUser(req: Request, res: Response) {
       });
 
       return res.status(201).json({ message: "User created" });
+    } else if (eventType === "user.deleted") {
+      // Delete User record from db
+      await prisma.user.delete({
+        where: {
+          clerkId: user.id,
+        },
+      });
     } else {
       throw new HttpError("Unrecognized Event Type", 400);
     }

@@ -15,12 +15,14 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
-  clerkId String
+  clerkId String @unique
   email String @unique
   imageUrl String
   firstName String
   lastName String
   type     UserType?
+  currentLevel Level?
+  targetLevel Level?
   userName String @unique
   createdAt DateTime @default(now())
   updatedAt DateTime
@@ -36,6 +38,13 @@ enum UserType {
   EXPERIENCED_PROFESSIONAL
   CAREER_SWITCHER
   ADMIN
+}
+
+enum Level {
+  ENTRY_LEVEL
+  MID_LEVEL
+  SENIOR_LEVEL
+  LEAD_MANAGER
 }
 
 model Profile {
