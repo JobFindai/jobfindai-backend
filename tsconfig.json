@@ -10,6 +10,8 @@
     "target": "ES2023",
     "esModuleInterop": true,
     "ignoreDeprecations": "5.0",
+    "rootDir": "./",
+    "outDir": "./dist",
 
     "baseUrl": "./",
     "paths": {
