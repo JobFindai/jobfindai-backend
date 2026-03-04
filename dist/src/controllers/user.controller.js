@@ -1,5 +1,5 @@
 import { getAuth } from "@clerk/express";
-import { prisma } from "../utils/prisma";
+import { prisma } from "../utils/prisma.js";
 export async function getUser(req, res) {
     try {
         console.log("GET USER CONTROLLER HIT");

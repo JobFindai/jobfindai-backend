@@ -1,7 +1,7 @@
 import { verifyWebhook } from "@clerk/express/webhooks";
 import { Webhook } from "svix";
-import HttpError from "../class/error";
-import { prisma } from "../utils/prisma";
+import HttpError from "../class/error.js";
+import { prisma } from "../utils/prisma.js";
 export async function validateWebhook(req, res, next) {
     try {
         const webhookSecret = process.env.CLERK_WEBHOOK_SIGNING_SECRET;

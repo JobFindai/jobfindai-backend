@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { createUser, validateWebhook } from "../controllers/webhook.controller";
+import { createUser, validateWebhook, } from "../controllers/webhook.controller.js";
 const router = express.Router();
 // Verify webhook signature to make sure it is from clerk
 // We need raw body for signature verification.
