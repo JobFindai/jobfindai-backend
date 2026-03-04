@@ -1,9 +1,9 @@
 import { verifyWebhook } from "@clerk/express/webhooks";
 import type { NextFunction, Request, Response } from "express";
 import { Webhook } from "svix";
-import HttpError from "../class/error";
-import type { User } from "../types/user";
-import { prisma } from "../utils/prisma";
+import HttpError from "../class/error.js";
+import type { User } from "../types/user.js";
+import { prisma } from "../utils/prisma.js";
 
 export async function validateWebhook(
   req: Request,

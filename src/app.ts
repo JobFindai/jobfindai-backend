@@ -1,9 +1,9 @@
 import express from "express";
 import type { Express } from "express";
-import userRoutes from "./routes/user.routes";
+import userRoutes from "./routes/user.routes.js";
 import { clerkMiddleware } from "@clerk/express";
 import dotenv from "dotenv";
-import webhookRoutes from "./routes/webhook.routes";
+import webhookRoutes from "./routes/webhook.routes.js";
 import cors from "cors";
 
 dotenv.config();

@@ -1,5 +1,8 @@
 import express, { Router } from "express";
-import { createUser, validateWebhook } from "../controllers/webhook.controller";
+import {
+  createUser,
+  validateWebhook,
+} from "../controllers/webhook.controller.js";
 
 const router: Router = express.Router();
 
