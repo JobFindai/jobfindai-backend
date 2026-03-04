@@ -12,7 +12,10 @@ const app: Express = express();
 
 // cors setup
 app.use(
-  cors(),
+  cors({
+    origin: ["https://job-find-ai-six.vercel.app", "https://job-find-ai.vercel.app"],
+    credentials: true,
+  }),
 );
 
 // Clerk - Verify JWT token
