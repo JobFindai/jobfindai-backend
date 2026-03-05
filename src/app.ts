@@ -26,7 +26,7 @@ app.use(
   }),
 );
 
-app.options("*", cors());
+// app.options("*", cors());
 
 // Clerk - Verify JWT token
 app.use(clerkMiddleware());
@@ -38,6 +38,9 @@ app.use("/api/webhooks", webhookRoutes);
 app.use(express.json());
 
 // API routes
+app.get("/", (req, res) => {
+  res.send("Backend Running 🚀");
+});
 app.use("/health", (req, res) => {
   res.status(200).send("OK");
 });
