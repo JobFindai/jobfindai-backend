@@ -1,1 +1,0 @@
-{"version":3,"file":"webhook.controller.d.ts","sourceRoot":"","sources":["../../src/controllers/webhook.controller.ts"],"names":[],"mappings":"AACA,OAAO,KAAK,EAAE,YAAY,EAAE,OAAO,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAM/D,wBAAsB,eAAe,CACnC,GAAG,EAAE,OAAO,EACZ,GAAG,EAAE,QAAQ,EACb,IAAI,EAAE,YAAY,2DAsBnB;AAED,wBAAsB,UAAU,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ,2DA4C3D"}
