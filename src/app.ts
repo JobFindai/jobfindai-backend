@@ -10,13 +10,23 @@ dotenv.config();
 
 const app: Express = express();
 
-// cors setup
+//Development cors setup
+// app.use(
+//   cors({
+//     origin: ["http://localhost:3001"],
+//     credentials: true,
+//   }),
+// );
+
+// Production Cors Setup
 app.use(
   cors({
-    origin: ["https://job-find-ai-six.vercel.app", "https://job-find-ai.vercel.app"],
+    origin: ["https://job-find-ai.vercel.app"],
     credentials: true,
   }),
 );
+
+app.options("*", cors());
 
 // Clerk - Verify JWT token
 app.use(clerkMiddleware());
@@ -28,8 +38,8 @@ app.use("/api/webhooks", webhookRoutes);
 app.use(express.json());
 
 // API routes
-app.use("/health", (req, res) => {
-  res.status(200).send("OK");
+app.use("/", (req, res) => {
+  res.status(200).send("Server is Up and Running ✅");
 });
 app.use("/api/v1/users", userRoutes);
 
