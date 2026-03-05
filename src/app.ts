@@ -23,7 +23,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: "https://job-find-ai.vercel.app",
+    origin: "*",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
