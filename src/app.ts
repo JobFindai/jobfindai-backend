@@ -13,10 +13,8 @@ const app: Express = express();
 // cors setup
 app.use(
   cors({
-    origin: "https://job-find-ai.vercel.app", // Explicitly allow your frontend
-    credentials: true, // Allow the browser to send the Authorization header/cookies
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"], // Ensure Authorization is allowed
+    origin: ["https://job-find-ai-six.vercel.app", "https://job-find-ai.vercel.app"],
+    credentials: true,
   }),
 );
 
