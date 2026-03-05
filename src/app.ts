@@ -38,8 +38,8 @@ app.use("/api/webhooks", webhookRoutes);
 app.use(express.json());
 
 // API routes
-app.use("/", (req, res) => {
-  res.status(200).send("Server is Up and Running ✅");
+app.use("/health", (req, res) => {
+  res.status(200).send("OK");
 });
 app.use("/api/v1/users", userRoutes);
 
