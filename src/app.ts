@@ -20,15 +20,14 @@ const app: Express = express();
 
 // Production Cors Setup
 
-// app.use(
-//   cors({
-//     origin: "https://job-find-ai.vercel.app",
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   }),
-// );
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://job-find-ai.vercel.app",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 // Clerk - Verify JWT token
 app.use(clerkMiddleware());
