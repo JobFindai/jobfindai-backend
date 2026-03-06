@@ -4,7 +4,6 @@ import { prisma } from "../utils/prisma.js";
 
 export async function getUser(req: Request, res: Response) {
   try {
-    console.log("GET USER CONTROLLER HIT");
     const { isAuthenticated, userId } = getAuth(req);
 
     if (!isAuthenticated) {

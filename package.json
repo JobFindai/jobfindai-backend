@@ -20,6 +20,7 @@
     "@types/node": "^25.3.0",
     "@types/pg": "^8.16.0",
     "prisma": "^7.4.1",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
@@ -31,7 +32,6 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "pg": "^8.18.0",
-    "serverless-http": "^4.0.0",
     "svix": "^1.86.0",
     "tsconfig-paths": "^4.2.0"
   }
