@@ -10,12 +10,13 @@
     "target": "ES2023",
     "esModuleInterop": true,
     "ignoreDeprecations": "5.0",
-    "rootDir": "./src",
+    "rootDir": ".",
     "outDir": "./dist",
 
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@generated/*": ["generated/*"]
     },
 
     // Environment Settings
