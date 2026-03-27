@@ -48,15 +48,24 @@ export async function uploadResume(req: Request, res: Response, next: NextFuncti
 
     const parsed = await parsePDF(req.file.buffer);
 
-    const saveData: { aiSummary?: string } = {};
-    if (parsed.sections.summary) {
-      saveData.aiSummary = parsed.sections.summary;
+    const saveData: Parameters<typeof profileService.saveResumeData>[2] = {
+      skills: parsed.parsed.skills,
+      experience: parsed.parsed.experience,
+      education: parsed.parsed.education,
+      certifications: parsed.parsed.certifications,
+      languages: parsed.parsed.languages,
+    };
+    if (parsed.parsed.yearsOfExperience !== null) {
+      saveData.yearsOfExperience = parsed.parsed.yearsOfExperience;
+    }
+    if (parsed.parsed.summary !== null) {
+      saveData.aiSummary = parsed.parsed.summary;
     }
     const profile = await profileService.saveResumeData(req.user.id, null, saveData);
 
     sendSuccess(res, "CV parsed successfully", {
       rawText: parsed.rawText,
-      sections: parsed.sections,
+      parsed: parsed.parsed,
       profile,
     });
   } catch (error) {
