@@ -1,10 +1,12 @@
 import type { UserModel } from "../../generated/prisma/models.js";
-import type { Level, UserType } from "../../generated/prisma/enums.js";
+// import type { Level, UserType } from "../../generated/prisma/enums.js";
+import type { Level, UserType } from "@prisma/client";
 import { prisma } from "../utils/prisma.js";
 
 // --- User + Profile (combined) ---
-
-export async function findUserByClerkId(clerkId: string): Promise<UserModel | null> {
+export async function findUserByClerkId(
+  clerkId: string,
+): Promise<UserModel | null> {
   return prisma.user.findUnique({ where: { clerkId } });
 }
 
