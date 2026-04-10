@@ -4,7 +4,11 @@ import * as profileService from "../services/profile.service.js";
 import { parsePDF } from "../utils/cv-parser.js";
 import HttpError from "../class/error.js";
 
-export async function getProfile(req: Request, res: Response, next: NextFunction) {
+export async function getProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     if (!req.user) throw new HttpError("User not found", 404);
 
@@ -15,29 +19,47 @@ export async function getProfile(req: Request, res: Response, next: NextFunction
   }
 }
 
-export async function updateOnboarding(req: Request, res: Response, next: NextFunction) {
+export async function updateOnboarding(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     if (!req.user) throw new HttpError("User not found", 404);
 
-    const updated = await profileService.updateOnboarding(req.user.clerkId, req.body);
+    const updated = await profileService.updateOnboarding(
+      req.user.clerkId,
+      req.body,
+    );
     sendSuccess(res, "Onboarding completed successfully", updated);
   } catch (error) {
     next(error);
   }
 }
 
-export async function updateProfile(req: Request, res: Response, next: NextFunction) {
+export async function updateProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     if (!req.user) throw new HttpError("User not found", 404);
 
-    const profile = await profileService.updateProfileFields(req.user.id, req.body);
+    const profile = await profileService.updateProfileFields(
+      req.user.id,
+      req.body,
+    );
     sendSuccess(res, "Profile updated successfully", profile);
   } catch (error) {
     next(error);
   }
 }
 
-export async function uploadResume(req: Request, res: Response, next: NextFunction) {
+export async function uploadResume(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     if (!req.user) throw new HttpError("User not found", 404);
 
@@ -61,7 +83,11 @@ export async function uploadResume(req: Request, res: Response, next: NextFuncti
     if (parsed.parsed.summary !== null) {
       saveData.aiSummary = parsed.parsed.summary;
     }
-    const profile = await profileService.saveResumeData(req.user.id, null, saveData);
+    const profile = await profileService.saveResumeData(
+      req.user.id,
+      null,
+      saveData,
+    );
 
     sendSuccess(res, "CV parsed successfully", {
       rawText: parsed.rawText,
@@ -73,7 +99,11 @@ export async function uploadResume(req: Request, res: Response, next: NextFuncti
   }
 }
 
-export async function deleteResume(req: Request, res: Response, next: NextFunction) {
+export async function deleteResume(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     if (!req.user) throw new HttpError("User not found", 404);
 

@@ -11,17 +11,18 @@ export async function findUserByClerkId(
 }
 
 export async function getFullProfile(clerkId: string) {
-  return prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { clerkId },
     include: { profile: true },
   });
+  return user;
 }
 
 export async function updateOnboarding(
   clerkId: string,
   data: { currentLevel: Level; targetLevel: Level; type: UserType },
 ) {
-  return prisma.user.update({
+  const updated = await prisma.user.update({
     where: { clerkId },
     data: {
       currentLevel: data.currentLevel,
@@ -31,6 +32,7 @@ export async function updateOnboarding(
     },
     include: { profile: true },
   });
+  return updated;
 }
 
 export async function updateProfileFields(
