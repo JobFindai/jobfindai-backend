@@ -22,6 +22,7 @@ export async function updateOnboarding(
   clerkId: string,
   data: { currentLevel: Level; targetLevel: Level; type: UserType },
 ) {
+  console.log("[updateOnboarding] called with:", { clerkId, data });
   const updated = await prisma.user.update({
     where: { clerkId },
     data: {
@@ -32,6 +33,7 @@ export async function updateOnboarding(
     },
     include: { profile: true },
   });
+  console.log("[updateOnboarding] success:", updated.id);
   return updated;
 }
 

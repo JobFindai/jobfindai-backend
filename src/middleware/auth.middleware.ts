@@ -28,7 +28,7 @@ export async function requireAuth(
     req.user = user;
     next();
   } catch (error) {
-    console.error("Auth middleware error:", error);
+    console.error("Auth middleware error:", error instanceof Error ? error.message : error);
     sendError(res, "Authentication failed", 401);
   }
 }

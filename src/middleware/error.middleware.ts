@@ -27,7 +27,7 @@ export function errorHandler(
   const message =
     err instanceof Error ? err.message : "Internal server error";
   console.error("Unhandled error:", err);
-  res.status(500).json({ status: "error", message });
+  res.status(500).json({ status: "error", message, ...(err instanceof Error && { stack: err.stack }) });
 }
 
 function isPrismaError(err: unknown): err is { code: string; meta?: Record<string, unknown> } {
@@ -39,7 +39,7 @@ function isPrismaError(err: unknown): err is { code: string; meta?: Record<strin
   );
 }
 
-function handlePrismaError(err: { code: string; meta?: Record<string, unknown> }): {
+function handlePrismaError(err: { code: string; meta?: Record<string, unknown>; message?: string }): {
   statusCode: number;
   message: string;
 } {
@@ -49,6 +49,7 @@ function handlePrismaError(err: { code: string; meta?: Record<string, unknown> }
     case "P2025":
       return { statusCode: 404, message: "Record not found" };
     default:
-      return { statusCode: 500, message: "Database error" };
+      console.error(`[Prisma] Unhandled error code: ${err.code}`, { meta: err.meta, message: err.message });
+      return { statusCode: 500, message: `Database error (code: ${err.code})` };
   }
 }
