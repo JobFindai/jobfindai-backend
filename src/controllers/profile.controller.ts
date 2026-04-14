@@ -64,7 +64,7 @@ export async function uploadResume(
     if (!req.user) throw new HttpError("User not found", 404);
 
     if (!req.file) {
-      sendError(res, "No file uploaded. Send a PDF with field name 'cv'", 400);
+      sendError(res, "No file uploaded. Send a PDF with field name 'file'", 400);
       return;
     }
 

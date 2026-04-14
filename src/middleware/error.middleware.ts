@@ -16,6 +16,18 @@ export function errorHandler(
     return;
   }
 
+  // Multer errors
+  if (isMulterError(err)) {
+    const message =
+      err.code === "LIMIT_UNEXPECTED_FILE"
+        ? `Unexpected file field. Use field name "file"`
+        : err.code === "LIMIT_FILE_SIZE"
+          ? "File exceeds the 5MB size limit"
+          : err.message;
+    res.status(400).json({ status: "error", message });
+    return;
+  }
+
   // Prisma known errors
   if (isPrismaError(err)) {
     const { statusCode, message } = handlePrismaError(err);
@@ -27,15 +39,26 @@ export function errorHandler(
   const message =
     err instanceof Error ? err.message : "Internal server error";
   console.error("Unhandled error:", err);
-  res.status(500).json({ status: "error", message, ...(err instanceof Error && { stack: err.stack }) });
+  res.status(500).json({ status: "error", message });
 }
 
-function isPrismaError(err: unknown): err is { code: string; meta?: Record<string, unknown> } {
+function isMulterError(err: unknown): err is { code: string; message: string } {
   return (
     typeof err === "object" &&
     err !== null &&
     "code" in err &&
-    typeof (err as { code: unknown }).code === "string"
+    typeof (err as { code: unknown }).code === "string" &&
+    (err as { code: string }).code.startsWith("LIMIT_")
+  );
+}
+
+function isPrismaError(err: unknown): err is { code: string; meta?: Record<string, unknown>; message?: string } {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "code" in err &&
+    typeof (err as { code: unknown }).code === "string" &&
+    (err as { code: string }).code.startsWith("P")
   );
 }
 
@@ -49,7 +72,7 @@ function handlePrismaError(err: { code: string; meta?: Record<string, unknown>; 
     case "P2025":
       return { statusCode: 404, message: "Record not found" };
     default:
-      console.error(`[Prisma] Unhandled error code: ${err.code}`, { meta: err.meta, message: err.message });
-      return { statusCode: 500, message: `Database error (code: ${err.code})` };
+      console.error(`[Prisma] Unhandled error code: ${err.code}`, { meta: err.meta });
+      return { statusCode: 500, message: "Database error" };
   }
 }

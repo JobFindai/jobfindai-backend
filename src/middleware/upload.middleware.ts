@@ -20,4 +20,4 @@ export const uploadResume = multer({
   storage,
   fileFilter,
   limits: { fileSize: MAX_FILE_SIZE },
-}).single("cv");
+}).single("file");
