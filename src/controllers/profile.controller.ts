@@ -61,6 +61,7 @@ export async function uploadResume(
   next: NextFunction,
 ) {
   try {
+    console.log(req.body, req.file);
     if (!req.user) throw new HttpError("User not found", 404);
 
     if (!req.file) {
