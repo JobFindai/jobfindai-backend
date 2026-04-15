@@ -5,6 +5,8 @@ import { clerkMiddleware } from "@clerk/express";
 import dotenv from "dotenv";
 import profileRoutes from "./routes/profile.routes.js";
 import webhookRoutes from "./routes/webhook.routes.js";
+import jobRoutes from "./routes/job.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 
 dotenv.config();
@@ -40,6 +42,8 @@ app.get("/health", (_req, res) => {
 
 // API routes
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/jobs", jobRoutes);
+app.use("/api/v1/dashboard", dashboardRoutes);
 
 // Global error handler (must be last)
 app.use(errorHandler);

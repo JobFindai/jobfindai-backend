@@ -87,19 +87,51 @@ model Profile {
 }
 
 model Job {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
   description String
-  salary      Int?
-  location    String?
+  company     String?
 
-  employerId  Int
-  employer    User     @relation("EmployerJobs", fields: [employerId], references: [id], onDelete: Cascade)
+  // Salary
+  salaryMin   Int?
+  salaryMax   Int?
+
+  // Location & work type
+  location    String?
+  remoteType  RemoteType @default(ON_SITE)
+  jobType     JobType    @default(FULL_TIME)
+
+  // Requirements
+  requiredSkills  String[]
+  experienceLevel Level?
+  sponsorsVisa    Boolean  @default(false)
+
+  // External source (null for admin-created jobs)
+  externalId     String?  @unique
+  externalSource String?
+  applyUrl       String?
+
+  // Optional — null for externally synced jobs
+  employerId  Int?
+  employer    User?    @relation("EmployerJobs", fields: [employerId], references: [id], onDelete: SetNull)
 
   applications Application[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum RemoteType {
+  REMOTE
+  HYBRID
+  ON_SITE
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
 }
 
 
@@ -121,6 +153,7 @@ model Application {
 enum ApplicationStatus {
   PENDING
   REVIEWED
+  INTERVIEW
   ACCEPTED
   REJECTED
 }
